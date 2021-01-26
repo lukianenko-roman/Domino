@@ -1,0 +1,210 @@
+﻿<Window x:Class="Domino.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Domino"
+        mc:Ignorable="d"
+        Title="Domino"
+        Height="576" Width="1024">
+    <Window.Resources>
+        <local:PercentageConverter x:Key="PercentageConverter"/>
+
+        <Style x:Key="StyleOpenBone" TargetType="Grid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Margin" Value="0 1 0 1"/>
+        </Style>
+        <Style x:Key="StyleOpenBoneHorizontal" TargetType="Grid" BasedOn="{StaticResource StyleOpenBone}">
+            <Setter Property="Width" Value="{Binding 
+                           Converter={StaticResource PercentageConverter}, 
+                           ElementName=border, 
+                           Path=ActualWidth, 
+                           ConverterParameter=.099}"/>
+            <Setter Property="Height" Value="{Binding 
+                           Converter={StaticResource PercentageConverter}, 
+                           ElementName=border, 
+                           Path=ActualWidth, 
+                           ConverterParameter=.0495}"/>
+        </Style>
+        <Style x:Key="StyleOpenBoneVertical" TargetType="Grid" BasedOn="{StaticResource StyleOpenBone}">
+            <Setter Property="Width" Value="{Binding 
+                           Converter={StaticResource PercentageConverter}, 
+                           ElementName=border, 
+                           Path=ActualWidth, 
+                           ConverterParameter=.0495}"/>
+            <Setter Property="Height" Value="{Binding 
+                           Converter={StaticResource PercentageConverter}, 
+                           ElementName=border, 
+                           Path=ActualWidth, 
+                           ConverterParameter=.099}"/>
+        </Style>
+
+        <Style x:Key="StyleClosedBoneHorizontal" TargetType="Grid" BasedOn="{StaticResource StyleOpenBoneHorizontal}">
+            <Setter Property="Background" Value="DarkGray"/>
+        </Style>
+        <Style x:Key="StyleClosedBoneVertical" TargetType="Grid" BasedOn="{StaticResource StyleOpenBoneVertical}">
+            <Setter Property="Background" Value="DarkGray"/>
+        </Style>
+
+        <Style x:Key="StyleClosedBoneVerticalWithMargin" TargetType="Grid" BasedOn="{StaticResource StyleClosedBoneVertical}">
+            <Setter Property="Margin" Value="1 1 1 1" />
+        </Style>
+        <Style x:Key="StyleOpenBoneVerticalWithMargin" TargetType="Grid" BasedOn="{StaticResource StyleOpenBoneVertical}">
+            <Setter Property="Margin" Value="1 1 1 1" />
+        </Style>
+
+        <Style x:Key="StyleBorderBone" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Panel.ZIndex" Value="2"/>
+        </Style>
+        <Style x:Key="StyleBorderBoneHorizontal" TargetType="Border" BasedOn="{StaticResource StyleBorderBone}">
+            <Setter Property="Grid.RowSpan" Value="3"/>
+            <Setter Property="Grid.ColumnSpan" Value="6"/>
+        </Style>
+        <Style x:Key="StyleBorderBoneVertical" TargetType="Border" BasedOn="{StaticResource StyleBorderBone}">
+            <Setter Property="Grid.RowSpan" Value="6"/>
+            <Setter Property="Grid.ColumnSpan" Value="3"/>
+        </Style>
+
+        <Style x:Key="StyleBorderMid" TargetType="Border">
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style x:Key="StyleBorderMidHorizontal" TargetType="Border" BasedOn="{StaticResource StyleBorderMid}">
+            <Setter Property="Grid.Column" Value="3"/>
+            <Setter Property="Grid.RowSpan" Value="3"/>
+            <Setter Property="BorderThickness" Value="1 0 0 0"/>
+        </Style>
+        <Style x:Key="StyleBorderMidVertical" TargetType="Border" BasedOn="{StaticResource StyleBorderMid}">
+            <Setter Property="Grid.Row" Value="3"/>
+            <Setter Property="Grid.ColumnSpan" Value="3"/>
+            <Setter Property="BorderThickness" Value="0 1 0 0"/>
+        </Style>
+
+        <Style x:Key="StyleZones" TargetType="Grid">
+            <Setter Property="DataContext" Value="{Binding}"/>
+            <Setter Property="Background" Value="{Binding Path=BackgroundBrush}"/>
+        </Style>
+
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplateBonesHorizontal">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplateBonesVertical">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical"/>
+        </ItemsPanelTemplate>
+        <Style x:Key="StyleItemsControl" TargetType="ItemsControl">
+            <Setter Property="ItemsSource" Value="{Binding}"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="StyleMenuItemSpeed" TargetType="MenuItem">
+            <Setter Property="IsCheckable" Value="True"/>
+            <Setter Property="IsChecked" Value="False"/>
+            <EventSetter Event="Checked" Handler="MenuItemSpeed_Checked"/>
+        </Style>
+        <Style x:Key="StyleMenuItemLoss" TargetType="MenuItem">
+            <Setter Property="IsCheckable" Value="True"/>
+            <Setter Property="IsChecked" Value="False"/>
+            <EventSetter Event="Checked" Handler="MenuItemLossAt_Checked"/>
+        </Style>
+
+        <Style x:Key="StyleTextBlockNames" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="Text" Value="{Binding Path=Name}"/>
+            <Setter Property="Foreground" Value="DarkCyan"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top" Background="Transparent">
+            <MenuItem Header="Game">
+                <MenuItem Header="New game" x:Name="MenuItemsNewGameGroup">
+                    <MenuItem Header="1 opponent" Name="MenuItemNewGameOpp1" Click="StartNewGame_Click"></MenuItem>
+                    <MenuItem Header="2 opponents" Name="MenuItemNewGameOpp2" Click="StartNewGame_Click"></MenuItem>
+                    <MenuItem Header="3 opponents" Name="MenuItemNewGameOpp3" Click="StartNewGame_Click"></MenuItem>
+                    <MenuItem Header="2x2" Name="MenuItemNewGameOpp2x2" Click="StartNewGame_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Reset" IsEnabled="False" x:Name="MenuItemReset" Click="MenuItemReset_Click">
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" Click="MenuItemExit_Click" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Speed" x:Name="ItemsSpeedGroup">
+                    <MenuItem Style="{StaticResource StyleMenuItemSpeed}" Header="Very slow" x:Name="MenuItemSpeedVS"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemSpeed}" Header="Slow" x:Name="MenuItemSpeedS"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemSpeed}" Header="Normal" x:Name="MenuItemSpeedN"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemSpeed}" Header="Fast" x:Name="MenuItemSpeedF"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemSpeed}" Header="Very fast" x:Name="MenuItemSpeedVF"/>
+                </MenuItem>
+                <MenuItem Header="Loss at...">
+                    <MenuItem Style="{StaticResource StyleMenuItemLoss}" Header="100 points" x:Name="MenuitemPoints100"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemLoss}" Header="200 points" x:Name="MenuitemPoints200"/>
+                    <MenuItem Style="{StaticResource StyleMenuItemLoss}" Header="300 points" x:Name="MenuitemPoints300"/>
+                </MenuItem>
+                <Separator />
+                <MenuItem x:Name="MenuItemIsShowNames" Header="Show players names" IsCheckable="True" IsChecked="False" Click="MenuItemIsShowNames_Click"/>
+                <MenuItem x:Name="MenuItemChangeNames" Header="Change names..." Click="MenuItemChangeNames_Click"/>
+                <Separator />
+                <MenuItem Header="Different colors for points" IsCheckable="True" IsChecked="False" Click="MenuItemDiffColors_Click"/>
+            </MenuItem>
+            <MenuItem Header="About..." Name="MenuItemAbout" Click="MenuItemAbout_Click"/>
+        </Menu>
+
+        <Grid x:Name="GridMain" DockPanel.Dock="Bottom">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4.5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Canvas x:Name="canvas" Grid.ColumnSpan="3" Grid.RowSpan="3" Panel.ZIndex="1"/>
+
+            <Grid Grid.Row="2" Grid.Column="2">
+                <TextBox x:Name="TextBoxCurrentScore" IsReadOnly="True" BorderThickness="0" Foreground="CadetBlue" Text="{Binding Path=CurrentScore}" FontWeight="DemiBold"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="RestZoneGrid" DataContext="{Binding}" Height="{Binding Path=RestGridHeight}"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="borderRest" Grid.Row="0" BorderBrush="SlateGray" BorderThickness="1"/>
+                <Grid Grid.Row="1" Background="AliceBlue"/>
+                <ItemsControl Grid.Row="0" x:Name="RestBonesItems" Style="{StaticResource StyleItemsControl}" ItemsPanel="{StaticResource ItemsPanelTemplateBonesHorizontal}"/>
+                <ItemsControl Grid.Row="1" x:Name="PlayedBonesItems" Style="{StaticResource StyleItemsControl}" ItemsPanel="{StaticResource ItemsPanelTemplateBonesHorizontal}" />
+            </Grid>
+
+            <Border Grid.Row="1" Grid.Column="1" x:Name="border" BorderBrush="Silver" BorderThickness="1"/>
+
+            <Grid Grid.Column="1" Grid.Row="2" Style="{StaticResource StyleZones}" x:Name="UserGridCell">
+                <TextBlock x:Name="TextBlockUserName" Style="{StaticResource StyleTextBlockNames}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="1" Style="{StaticResource StyleZones}" x:Name="OppLeftGridCell">
+                <TextBlock x:Name="TextBlockOppLeftName" Style="{StaticResource StyleTextBlockNames}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Style="{StaticResource StyleZones}" x:Name="OppTopGridCell">
+                <TextBlock x:Name="TextBlockOppTopName" Style="{StaticResource StyleTextBlockNames}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid Grid.Column="2" Grid.Row="1" Style="{StaticResource StyleZones}" x:Name="OppRightGridCell">
+                <TextBlock x:Name="TextBlockOppRightName" Style="{StaticResource StyleTextBlockNames}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Grid>
+
+            <ItemsControl Grid.Column="1" Grid.Row="2" x:Name="UserBonesItems" Style="{StaticResource StyleItemsControl}"  ItemsPanel="{StaticResource ItemsPanelTemplateBonesHorizontal}"/>
+            <ItemsControl Grid.Column="0" Grid.Row="1" x:Name="OpponentLeftBonesItems" Style="{StaticResource StyleItemsControl}" ItemsPanel="{StaticResource ItemsPanelTemplateBonesVertical}"/>
+            <ItemsControl Grid.Column="1" Grid.Row="0" x:Name="OpponentTopBonesItems" Style="{StaticResource StyleItemsControl}" ItemsPanel="{StaticResource ItemsPanelTemplateBonesHorizontal}"/>
+            <ItemsControl Grid.Column="2" Grid.Row="1" x:Name="OpponentRigthBonesItems" Style="{StaticResource StyleItemsControl}" ItemsPanel="{StaticResource ItemsPanelTemplateBonesVertical}"/>
+
+        </Grid>
+    </DockPanel>
+</Window>

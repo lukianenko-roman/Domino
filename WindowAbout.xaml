@@ -1,0 +1,33 @@
+﻿<Window x:Class="Domino.WindowAbout"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        ShowInTaskbar ="False"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        Title="About" SizeToContent="WidthAndHeight">
+    <Grid>
+        <TextBlock Margin="20" FontSize="14">About application:<LineBreak/>
+            You can play Domino vs PC using this application.<LineBreak/><LineBreak/>
+            Rules:<LineBreak/>
+            Goal of game: to get less points than opponent.<LineBreak/>
+            Players quantity: 2-4 (if 4 players game could be paired - 2 vs 2; in this case score is general for each pair of players; players in pair are opposite each other).<LineBreak/>
+            Game is over when one of players (or pair of players) gets 100 points (max score could be changed in settings).<LineBreak/>
+            General: there are 28 bones (0-0, 0-1, ... , 5-5, 5-6, 6-6). Every player gets 7 bones before each round.<LineBreak/>
+            Ungiven bones (if there are less than 4 players) stays on the table at closed state.<LineBreak/>
+            Every player can see just self bones and can`t tell any other player any information about self bones.<LineBreak/>
+            First round should be started by player who has least bone with the same point`s quantity on it except 0-0;<LineBreak/> in case of lack of bones with the same points`s quantity - players who has bone with smallest sum of points.<LineBreak/>
+            Every next round should be started by player which ended previous one. Player should play from the least bone with the same point`s quantity on it except 0-0;<LineBreak/>in case of lack of bones with the same points`s quantity - from bone with smallest sum of points.<LineBreak/>
+            First bone is putting to the center of the table. Every next player clockwise should put one of his bones sideways the left or right part of played bones until end of the round.<LineBreak/>
+            Neighboring played bones should have equal quantity of points on halfs close to each other.<LineBreak/>
+            If player has no applicable bone to put to the table he should take bone from rest unplayed bones and repeat until he has applicable bone.<LineBreak/>
+            Last of rest bones could not be taken (if there are less than 4 players in the game) and should be opened.<LineBreak/>
+            Round is over if one of players has no more bones left or there is no more possible moves.<LineBreak/>
+            If any player has the only bone 0-0 at the end of round his score is 10 not 0 in this round.<LineBreak/>
+            Player/players/pair with biggest quantity of points on self bones left get(s) those points.<LineBreak/>If all the players/pairs have the same quantity of points - those points will be played in the next round and loser(s) of next round will get them.
+        </TextBlock>
+    </Grid>
+</Window>

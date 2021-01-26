@@ -1,0 +1,23 @@
+﻿<Window x:Class="Domino.WindowChangeNames"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        ShowInTaskbar ="False"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="CenterOwner"
+        Title="Change names" SizeToContent="WidthAndHeight">
+    <StackPanel>
+        <TextBlock Margin="5">User name:</TextBlock>
+        <TextBox x:Name="TextBoxUserName" Margin="5" Width="250" TextAlignment="Left"></TextBox>
+        <TextBlock Margin="5">Opponent from left name:</TextBlock>
+        <TextBox x:Name="TextBoxOppLeftName" Margin="5" TextAlignment="Left"></TextBox>
+        <TextBlock Margin="5">Opponent from top name:</TextBlock>
+        <TextBox x:Name="TextBoxOppTopName" Margin="5" TextAlignment="Left"></TextBox>
+        <TextBlock Margin="5">Opponent from right name:</TextBlock>
+        <TextBox x:Name="TextBoxOppRightName" Margin="5" TextAlignment="Left"></TextBox>
+        <Button x:Name="ButtonOK" Margin="5" Click="ButtonOK_Click">OK</Button>
+    </StackPanel>
+</Window>
