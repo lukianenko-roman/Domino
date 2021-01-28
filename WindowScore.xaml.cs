@@ -65,7 +65,7 @@ namespace Domino
                         user = maxScore;
                         break;
                     case 1:
-                        if (OpponentsQty > 2)
+                        if (OpponentsQty > 1)
                             oppLeft = maxScore;
                         else
                             oppTop = maxScore;
