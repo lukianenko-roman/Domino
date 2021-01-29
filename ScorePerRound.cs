@@ -36,9 +36,8 @@ namespace Domino
             OpponentPairScoreProperty = DependencyProperty.Register("OpponentPairScore", typeof(int), typeof(ScorePerRound));
         }
         internal ScorePerRound() { }
-        internal ScorePerRound(int userScore, int oppLeftScore, int oppTopScore, int oppRightScore, int equilScore, int _lastEquilScore)
+        internal ScorePerRound(int userScore, int oppLeftScore, int oppTopScore, int oppRightScore, int equilScore, int lastEquilScore)
         {
-            int lastEquilScore = _lastEquilScore;
             int playersWithNotZeroScoreInitial = new int[4] { userScore, oppLeftScore, oppTopScore, oppRightScore }.Count(c => c > 0);
             int playersWithNotZeroScoreLeft = playersWithNotZeroScoreInitial;
 
@@ -48,7 +47,7 @@ namespace Domino
             OppTopScore = oppTopScore + (oppTopScore == 0 || lastEquilScore == 0 ? 0 : AddLastEquilScore(lastEquilScore, playersWithNotZeroScoreInitial, ref playersWithNotZeroScoreLeft));
             OppRightScore = oppRightScore + (oppRightScore == 0 || lastEquilScore == 0 ? 0 : AddLastEquilScore(lastEquilScore, playersWithNotZeroScoreInitial, ref playersWithNotZeroScoreLeft));
 
-            EqualScore = equilScore + (equilScore == 0 ? 0 : lastEquilScore);
+            EqualScore = equilScore;
             UserPairScore = UserScore + OppTopScore;
             OpponentPairScore = OppLeftScore + OppRightScore;
         }
